@@ -418,7 +418,7 @@ class Update5m0 extends Update
         $sqlquery = 'CREATE TABLE LMB_SYNCSTRUCTURE_TEMPLATE (
      ID ' . LMB_DBTYPE_INTEGER . ' NOT NULL ' . LMB_DBFUNC_PRIMARY_KEY . ',
      NAME ' . LMB_DBTYPE_VARCHAR . '(50),
-     MODUL ' . LMB_DBTYPE_VARCHAR . ' ' . LMB_DBTYPE_LONG . '
+     MODUL ' . LMB_DBTYPE_VARCHAR . '
 )';
 
         return $this->databaseUpdate($sqlquery);
