@@ -1051,13 +1051,20 @@ function backup_data($medium,$path,$typ){
 	global $DBA;
 	global $db;
 
-    $host = '';
-    if($DBA['DBHOST'] AND $DBA['DBHOST'] != 'localhost'){
-        $host = '-h '.$DBA['DBHOST'];
-    }
+	putenv('PGPASSWORD=' . $DBA['DBCPASS']);
+	putenv('PGUSER=' . $DBA['DBCUSER']);
+	putenv('PGHOST=' . $DBA['DBHOST']);
+	putenv('PGPORT=' . $DBA['PORT']);
+	putenv('PGDATABASE=' . $DBA['DBCNAME']);
 
-	$sys = "pg_dump $host ".$DBA["DBCNAME"]." -U ".$DBA["DBCUSER"]." | gzip > ".$path["path"].".gz";
+
+	$sys = "pg_dump --no-owner --quote-all-identifiers | gzip > ".$path["path"].".gz";
 	exec($sys,$res,$ret);
+	
+	putenv('PGPASSWORD=null' );
+	putenv('PGUSER=user');
+	putenv('PGHOST=localhost');
+	putenv('PGDATABASE=postgres');
 
 	if(!$ret){
 		clearstatcache();
